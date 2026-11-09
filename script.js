@@ -1,5 +1,5 @@
 /*
-  CREASE - JAVASCRIPT
+  Wicketly- JAVASCRIPT
   This file controls the scoreboard.
 
   Beginner guide:
@@ -9,7 +9,7 @@
   - persist() saves the match in this browser.
 */
 
-const KEY="crease-studio-v1";
+const KEY="wicketly-match-v1";
 const blankPlayer=(name)=>({name,runs:0,balls:0,fours:0,sixes:0,out:false,dismissal:""});
 const blankBowler=(name)=>({name,balls:0,runs:0,wickets:0,maidens:0});
 const freshMatch=(teamA="Harbour XI",teamB="Valley CC",overs=20)=>({
@@ -20,7 +20,7 @@ const freshMatch=(teamA="Harbour XI",teamB="Valley CC",overs=20)=>({
 let state=null, page="live", modalAction=null;
 try{state=JSON.parse(localStorage.getItem(KEY)||"null")}catch{}
 const app=document.getElementById("app"),$=id=>document.getElementById(id);
-const THEME_KEY="crease-theme-v1";
+const THEME_KEY="wicketly-theme-v1";
 function applyTheme(theme){
  const chosen=theme==="dark"?"dark":"light";
  document.body.dataset.theme=chosen;
@@ -70,7 +70,7 @@ function setupView(){app.innerHTML=`
 <section class="setup"><div class="eyebrow">Start a match</div><h2>Set the teams.</h2><div class="setup-grid">
 <label class="field"><input id="teamA" placeholder="Batting team" aria-label="Batting team" maxlength="32"></label>
 <label class="field"><input id="teamB" placeholder="Bowling team" aria-label="Bowling team" maxlength="32"></label>
-<label class="field"><input id="overs" type="number" min="1" max="1000" step="1" inputmode="numeric" placeholder="Overs per innings (e.g. 20)" aria-label="Overs per innings"><small class="field-help">Choose any whole number from 1 to 1,000 overs.</small></label>
+<label class="field"><input id="overs" type="number" min="1" max="1000" step="1" inputmode="numeric" placeholder=" set overs (e.g. 20)" aria-label=" set overs"><small class="field-help">Choose any whole number from 1 to 1,000 overs.</small></label>
 <label class="field"><input id="batterA" placeholder="Opening batter" aria-label="Opening batter" maxlength="32"></label>
 <label class="field"><input id="batterB" placeholder="Non-striker" aria-label="Non-striker" maxlength="32"></label>
 <label class="field"><input id="bowlerA" placeholder="Opening bowler" aria-label="Opening bowler" maxlength="32"></label>
@@ -81,7 +81,7 @@ function scoreView(){const i=active(),bat=i.batters,bowl=currentBowler(),str=bat
  const overStart=(()=>{let legal=0,k=i.deliveries.length;for(let x=i.deliveries.length-1;x>=0;x--){k=x;if(i.deliveries[x].legal&&++legal===6){k=x+1;break}}return k})();
  const over=i.deliveries.slice(overStart);
  app.innerHTML=`
-<section class="intro"><div><div class="eyebrow">Match in progress · ${state.oversLimit} overs</div><h1>${esc(i.batting)} <span style="color:#929b92">at the crease.</span></h1><p>Record the delivery. Crease keeps the innings, player figures and match history together.</p></div><div class="match-meta">INNINGS ${state.inningsNo} OF 2<br>${state.inningsNo===2?"CHASE":"FIRST INNINGS"}</div></section>
+<section class="intro"><div><div class="eyebrow">Match in progress · ${state.oversLimit} overs</div><h1>${esc(i.batting)} <span style="color:#929b92"> TEAM on the BLAST !</span></h1><p>Record the delivery. Crease keeps the innings, player figures and match history together.</p></div><div class="match-meta">INNINGS ${state.inningsNo} OF 2<br>${state.inningsNo===2?"CHASE":"FIRST INNINGS"}</div></section>
 <section class="score-hero"><div class="score-main"><div class="score-top"><span class="live-label"><i class="live-dot"></i>${i.completed?"Innings complete":"Scoring live"}</span><span class="innings-label">${esc(i.batting)} batting</span></div><div class="big-score">${i.runs}<span>/${i.wickets}</span></div><div class="score-stats"><div class="score-stat"><label>Overs</label><b>${overText(i.balls)}</b></div><div class="score-stat"><label>Run rate</label><b>${cRun}</b></div><div class="score-stat"><label>Extras</label><b>${Object.values(i.extras).reduce((a,b)=>a+b,0)}</b></div>${state.target!==null?`<div class="score-stat"><label>Required rate</label><b>${ballsLeft?rate(needed,ballsLeft):"—"}</b></div>`:""}</div></div>
 <aside class="score-aside"><div class="teams-line"><span>${esc(state.teamA)}</span><span class="versus">V</span><span>${esc(state.teamB)}</span></div><div class="target-box"><label>${state.target===null?"First innings":"Target"}</label><strong>${state.target===null?"—":state.target}</strong><p>${state.target===null?"The chase target appears after the innings.":needed===0?`${esc(i.batting)} have won the chase.`:`${needed} needed from ${ballsLeft} balls`}</p></div></aside></section>
 ${state.inningsNo===1?`<div class="innings-action"><button class="button primary" id="endInnings">End first innings & set target</button><p>First-innings score will be saved before the chase begins.</p></div>`:`<div class="innings-action"><span class="draft">First innings saved</span><p>${esc(state.first.batting)} ${state.first.runs}/${state.first.wickets} · Target ${state.target}</p></div>`}
