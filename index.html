@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f4f3ee">
+<title>Wicketly — cricket scorer</title>
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+<div class="shell">
+<header class="site-header">
+<a class="wordmark" href="#" id="homeLink"><span class="mark">W</span><span><strong>Wicketly</strong><small>cricket, ready to play</small></span></a>
+<div class="header-right"><span class="local-save" id="saveStatus">Saved on this device</span><div class="theme-switch" role="group" aria-label="Colour theme"><button class="theme-choice" id="lightTheme" type="button" aria-pressed="true" title="Light theme">☼ <span>Light</span></button><button class="theme-choice" id="darkTheme" type="button" aria-pressed="false" title="Dark theme">☾ <span>Dark</span></button></div><button class="text-button" id="newMatchBtn">New match</button></div>
+</header>
+<main id="app"></main>
+<footer class="site-footer"><div class="footer-inner"><span>© 2026 Wicketly. A simple scorer for the game.</span><nav class="footer-links"><a href="#terms" data-page="terms">Terms</a><a href="#privacy" data-page="privacy">Privacy</a></nav></div></footer>
+</div>
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal"><h2 id="modalTitle"></h2><div id="modalContent"></div><div class="error" id="modalError" role="alert"></div><div class="modal-actions"><button class="button" id="modalCancel">Cancel</button><button class="button primary" id="modalSave">Save</button></div></div></div>
+<script src="script.js"></script>
+</body></html>
