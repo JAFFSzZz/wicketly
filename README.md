@@ -1,4 +1,4 @@
-# Crease — Cricket Scoreboard
+# wicketly — Cricket Scoreboard
 
 A simple cricket scoreboard website built with HTML, CSS and JavaScript.
 
