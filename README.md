@@ -1,104 +1,150 @@
-<div align="center">
 
 # 🏏 WICKETLY
+### Your Little Cricket World. Your Big Match.
 
-### Every run. Every wicket. Every moment.
+<p align="center">
+  <strong>🌤️ Pick your team. Own the crease. Chase the glory!</strong>
+</p>
 
-*A simple cricket scoreboard, built for the love of the game.*
-
-<br/>
-
-[![Live Demo](https://img.shields.io/badge/🌐_LIVE_DEMO-Open_Wicketly-285b43?style=for-the-badge)](https://jaffszzz.github.io/wicketly/)
-[![HTML](https://img.shields.io/badge/HTML-5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
-[![CSS](https://img.shields.io/badge/CSS-3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[![JavaScript](https://img.shields.io/badge/JavaScript-Vanilla-F7DF1E?style=for-the-badge&logo=javascript&logoColor=222)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-
-**[🚀 LAUNCH WICKETLY](https://jaffszzz.github.io/wicketly/)**
-
-</div>
+<p align="center">
+  <a href="https://jaffszzz.github.io/wicketly/">
+    <strong>🚀 PLAY WICKETLY LIVE</strong>
+  </a>
+</p>
 
 ---
 
-## ✦ The game, at a glance.
+## 🎨 Welcome to Wicketly!
 
-Wicketly is a lightweight cricket scoreboard for keeping track of a match without the fuss. Set up your teams, add your players, choose the overs and start scoring.
+Wicketly is a fun, cartoon-inspired cricket scoring web app that brings the excitement of a cricket match into a playful digital experience.
 
-No account. No complicated setup. Just cricket.
+Inspired by colourful 2D cricket games, Wicketly combines a lively cricket-ground atmosphere, cheerful visuals, cricket-themed details and a simple live scoreboard.
 
-## 🏟️ Made for match day
+Whether you're playing with friends, organising a local match or just enjoying a quick game, Wicketly makes every ball count!
 
-| | Feature | What you can do |
-|:--:|:--|:--|
-| 🏏 | **Custom overs** | Set the number of overs for your innings |
-| 👥 | **Match setup** | Add team names, batters and opening bowler |
-| ⚡ | **Live scoring** | Record runs, extras and wickets |
-| 📊 | **Player stats** | Follow batter and bowler figures |
-| 🎯 | **Two innings** | Set a target and track the chase |
-| ↩️ | **Undo** | Reverse your last scoring action |
-| 🎉 | **Victory moment** | Celebrate when the target is reached |
-| 🌗 | **Light & dark** | Pick the theme you like |
-| 💾 | **Auto-save** | Keep match progress in your browser |
+---
 
-## 🧩 Under the hood
+## 🏟️ THE WICKETLY EXPERIENCE
 
-Wicketly is built with the fundamentals of web development:
+🌱 **A Cartoon Cricket World**
+- Bright, playful cricket-inspired design.
+- Lively colours and friendly visual details.
+- Rounded cards and game-like controls.
+- Cricket-themed icons and styling.
 
-- **HTML** — the structure and content
-- **CSS** — the layout, colours and responsive design
-- **JavaScript** — scoring and match interactions
-- **Local Storage** — saves match progress in your browser
+🏏 **Live Cricket Scoring**
+- Record runs from 0 to 6.
+- Track wickets and extras.
+- Manage striker and non-striker.
+- Track batter and bowler statistics.
+- Undo the previous scoring action.
 
-No frameworks, package installs or build tools needed.
+🎯 **Match Management**
+- Custom team names.
+- Custom overs from 1 to 1000.
+- Opening batter and bowler setup.
+- Over-completion popup.
+- First innings and second innings flow.
+- Automatic chase target calculation.
+- Runs needed and balls remaining.
+- Match result and victory celebration.
 
-## ▶️ Run it on your computer
+💾 **Save Your Match**
+- Match progress saved using browser localStorage.
+- Theme preferences remembered.
+- No account or database required.
 
-Want to explore the code or make changes?
+📱 **Made for Every Screen**
+- Responsive mobile layout.
+- Desktop-friendly scoreboard.
+- Light and dark themes.
 
-1. Download or clone this repository.
-2. Open the `wicketly` folder in **Visual Studio Code**.
-3. Open `index.html`.
-4. Right-click and choose **Open with Live Server**.
+---
 
-You can also open `index.html` directly in your browser.
+## 🕹️ HOW TO PLAY
 
-## 📂 Project map
+1. Open Wicketly.
+2. Enter your team names.
+3. Select the number of overs.
+4. Choose your opening batters and bowler.
+5. Start scoring!
+6. Complete the first innings.
+7. Set up your chase line-up.
+8. Chase the target and win the match!
+
+---
+
+## 🛠️ BUILT WITH
+
+| Technology | Purpose |
+|---|---|
+| HTML | Structure |
+| CSS | Design and styling |
+| JavaScript | Cricket scoring and match logic |
+| localStorage | Saving match data |
+
+No React, Node.js, npm or database required.
+
+---
+
+## 📂 PROJECT STRUCTURE
 
 ```text
 wicketly/
 │
-├── index.html    → Website structure
-├── style.css     → Design, layout and themes
-├── script.js     → Scoreboard logic
-├── README.md     → Project guide
-└── .gitignore    → Git ignore rules
+├── index.html
+├── style.css
+├── script.js
+└── README.md
 ```
-
-## 🌍 Take a look
-
-<div align="center">
-
-### Your next scorecard is one click away.
-
-## [https://jaffszzz.github.io/wicketly/](https://jaffszzz.github.io/wicketly/)
-
-*Free hosting powered by GitHub Pages.*
-
-</div>
-
-## 💾 A small note about match data
-
-Match progress is saved in your browser using Local Storage. It stays on the same browser and device; it does not automatically sync between devices. Clearing browser data may remove saved match information.
-
-## 🤝 Want to make it better?
-
-Suggestions and improvements are welcome. Fork the project, explore the code and build on it.
 
 ---
 
-<div align="center">
+## 🚀 RUN LOCALLY
 
-**Made with ❤️ and a love for cricket.**
+1. Clone or download this repository.
+2. Open the folder in Visual Studio Code.
+3. Open `index.html` in your browser.
+4. Or use the Live Server extension.
+5. Start your cricket match!
 
-*WICKETLY — Keep the game moving.*
+---
 
-</div>
+## 🌍 LIVE WEBSITE
+
+**Play Wicketly here:**
+
+🏏 https://jaffszzz.github.io/wicketly/
+
+Hosted with GitHub Pages.
+
+---
+
+## 💡 WHAT'S NEXT?
+
+Ideas for future Wicketly upgrades:
+
+- 🎙️ Ball-by-ball commentary.
+- 📊 Run-rate and partnership charts.
+- 🥇 Tournament leaderboards.
+- 📤 Shareable scorecards.
+- 🔊 Cricket sound effects.
+- 👤 Custom player avatars.
+- 🎉 Animated sixes and wickets.
+- 🏆 Match history.
+
+---
+
+## ❤️ MADE FOR THE LOVE OF CRICKET
+
+Wicketly started with one simple idea:
+
+**Scoring a cricket match should feel as fun as playing one.**
+
+Built with creativity, curiosity and a whole lot of cricket love.
+
+If you like the project, give this repository a ⭐!
+
+<p align="center">
+  <strong>🏏 WICKETLY — EVERY BALL HAS A LITTLE STORY.</strong>
+</p>
