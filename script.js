@@ -111,7 +111,6 @@ function setupView(){app.innerHTML=`
 </div><div class="setup-actions"><span class="hintline">You can edit player names during the match.</span><button class="button primary" id="startMatch">Start scoring</button></div></section>`; 
 $("startMatch").onclick=()=>{const a=$("teamA").value.trim(),b=$("teamB").value.trim(),overs=Number($("overs").value);if(!a||!b||a.toLowerCase()===b.toLowerCase()){alert("Enter two different team names.");return}if(!Number.isInteger(overs)||overs<1||overs>1000){alert("Enter a whole number of overs between 1 and 1000.");return}state=freshMatch(a,b,overs);state.innings.batters=[blankPlayer($("batterA").value.trim()||"Batter 1"),blankPlayer($("batterB").value.trim()||"Batter 2")];state.innings.bowlers=[blankBowler($("bowlerA").value.trim()||"Bowler 1")];persist();page="live";render()};
 }
-
 function scoreView(){const i=active(),bat=i.batters,bowl=currentBowler(),str=bat[i.striker],non=bat[i.non],cRun=rate(i.runs,i.balls),needed=state.target===null?null:Math.max(0,state.target-i.runs),ballsLeft=state.target===null?null:Math.max(0,state.oversLimit*6-i.balls);
  const overStart=(()=>{let legal=0,k=i.deliveries.length;for(let x=i.deliveries.length-1;x>=0;x--){k=x;if(i.deliveries[x].legal&&++legal===6){k=x+1;break}}return k})();
  const over=i.deliveries.slice(overStart);
@@ -126,7 +125,7 @@ function scoreView(){const i=active(),bat=i.batters,bowl=currentBowler(),str=bat
   return {title:`${state.first.batting} win!`,detail:`They won by ${difference} run${difference===1?"":"s"}.`};
  })();
  app.innerHTML=`
-<section class="intro"><div><div class="eyebrow">Match in progress · ${state.oversLimit} overs</div><h1>${esc(i.batting)} <span style="color:#929b92">BATTING NOW !!!.</span></h1><p>Record the delivery. Wicketly keeps the innings, player figures and match history together.</p></div><div class="match-meta">INNINGS ${state.inningsNo} OF 2<br>${state.inningsNo===2?"CHASE":"FIRST INNINGS"}</div></section>
+<section class="intro"><div><div class="eyebrow">Match in progress · ${state.oversLimit} overs</div><h1>${esc(i.batting)} <span style="color:#929b92">at the crease.</span></h1><p>Record the delivery. Wicketly keeps the innings, player figures and match history together.</p></div><div class="match-meta">INNINGS ${state.inningsNo} OF 2<br>${state.inningsNo===2?"CHASE":"FIRST INNINGS"}</div></section>
 <section class="score-hero"><div class="score-main"><div class="score-top"><span class="live-label"><i class="live-dot"></i>${i.completed?"Innings complete":"Scoring live"}</span><span class="innings-label">${esc(i.batting)} batting</span></div><div class="big-score">${i.runs}<span>/${i.wickets}</span></div><div class="score-stats"><div class="score-stat"><label>Overs · Ball</label><b>${overText(i.balls)} · ${i.balls%6===0?6:i.balls%6}</b></div><div class="score-stat"><label>Run rate</label><b>${cRun}</b></div><div class="score-stat"><label>Extras</label><b>${Object.values(i.extras).reduce((a,b)=>a+b,0)}</b></div>${state.target!==null?`<div class="score-stat"><label>Required rate</label><b>${ballsLeft?rate(needed,ballsLeft):"—"}</b></div>`:""}</div></div>
 <aside class="score-aside"><div class="teams-line"><span>${esc(state.teamA)}</span><span class="versus">V</span><span>${esc(state.teamB)}</span></div><div class="target-box"><label>${state.target===null?"First innings":"Target"}</label><strong>${state.target===null?"—":state.target}</strong><p>${state.target===null?"The chase target appears after the innings.":`${needed} runs needed · ${ballsRemaining} balls remaining`}</p>${state.target!==null?`<div class="target-details"><div><small>BALLS AVAILABLE</small><strong>${ballsAvailable}</strong></div><div><small>BALLS LEFT</small><strong>${ballsRemaining}</strong></div><div><small>RUNS NEEDED</small><strong>${needed}</strong></div></div>`:""}</div></aside></section>
 ${state.inningsNo===1?`<div class="innings-action"><button class="button primary" id="endInnings">End first innings & set target</button><p>First-innings score will be saved before the chase begins.</p></div>`:`<div class="innings-action"><span class="draft">First innings saved</span><p>${esc(state.first.batting)} ${state.first.runs}/${state.first.wickets} · Target ${state.target}</p></div>`}
@@ -138,7 +137,7 @@ ${state.inningsNo===1?`<div class="innings-action"><button class="button primary
  bindLive();
 }
 function liveLayout(i,str,non,bowl,over){return `<div class="layout"><div class="stack">
-<section class="panel"><div class="panel-head"><h2>BATTING PAIRS</h2><small>BATTERS</small></div>${[[str,true],[non,false]].map(([p,is])=>`<div class="player-row"><div><span class="player-name">${esc(p.name)}</span>${is?'<span class="striker-tag">STRIKER</span>':""}<span class="player-role">${p.out?"Dismissed":`${p.fours} fours · ${p.sixes} sixes · SR ${rate(p.runs,p.balls)}`}</span></div><div class="player-score">${p.runs}<small> (${p.balls})</small></div></div>`).join("")}<div class="player-actions"><button class="button" id="editBatters">Edit batter names</button><button class="button" id="swapStrike">Swap strike</button></div></section>
+<section class="panel"><div class="panel-head"><h2>At the crease</h2><small>BATTERS</small></div>${[[str,true],[non,false]].map(([p,is])=>`<div class="player-row"><div><span class="player-name">${esc(p.name)}</span>${is?'<span class="striker-tag">STRIKER</span>':""}<span class="player-role">${p.out?"Dismissed":`${p.fours} fours · ${p.sixes} sixes · SR ${rate(p.runs,p.balls)}`}</span></div><div class="player-score">${p.runs}<small> (${p.balls})</small></div></div>`).join("")}<div class="player-actions"><button class="button" id="editBatters">Edit batter names</button><button class="button" id="swapStrike">Swap strike</button></div></section>
 <section class="panel"><div class="panel-head"><h2>Current over</h2><small>${i.balls%6} OF 6 LEGAL BALLS</small></div><div class="over-chips">${over.length?over.map(d=>`<span class="chip ${d.wicket?"wicket":d.runs===4||d.runs===6?"boundary":""}">${esc(d.label)}</span>`).join(""):'<span class="empty">Your deliveries will appear here.</span>'}</div></section>
 <section class="panel"><div class="panel-head"><h2>Bowling</h2><small>ACTIVE BOWLER</small></div><div class="bowler-line"><div><div class="bowler-name">${esc(bowl.name)}</div><div class="player-role">${bowl.maidens} maidens · Econ ${rate(bowl.runs,bowl.balls)}</div></div><div class="bowler-fig">${overText(bowl.balls)} <small>ov</small> · ${bowl.runs}/${bowl.wickets}</div></div><div class="player-actions"><button class="button" id="editBowler">Change bowler</button></div></section>
 </div><div class="stack"><section class="panel scoring-panel"><div class="panel-head"><h2>Score this ball</h2><small>${i.completed?"INNINGS ENDED":"TAP TO RECORD"}</small></div><div class="run-grid">${[0,1,2,3,4,6].map(n=>`<button class="run-key ${n===4||n===6?"boundary":""}" data-run="${n}" ${i.completed?"disabled":""}>${n}</button>`).join("")}</div><div class="extra-grid"><button class="button" data-extra="wide" ${i.completed?"disabled":""}>Wide +1</button><button class="button" data-extra="noBall" ${i.completed?"disabled":""}>No ball +1</button><button class="button" data-extra="bye" ${i.completed?"disabled":""}>Bye</button><button class="button" data-extra="legBye" ${i.completed?"disabled":""}>Leg bye</button></div><div class="scoring-actions"><button class="button danger" id="wicketBtn" ${i.completed?"disabled":""}>Wicket</button><button class="button" id="undoBtn" ${state.history.length?"":"disabled"}>Undo last action</button></div><p class="hintline">Odd runs rotate strike. Strike also changes after six legal balls.</p></section>
@@ -152,7 +151,7 @@ function bindLive(){const i=active();document.querySelectorAll("[data-run]").for
  $("swapStrike")?.addEventListener("click",()=>{snap();rotate();persist();render()});
  $("editBatters")?.addEventListener("click",()=>{const a=i.batters[i.striker],b=i.batters[i.non];showModal("Edit batter names",`<label class="field">STRIKER<input id="editStriker" value="${esc(a.name)}"></label><label class="field">NON-STRIKER<input id="editNon" value="${esc(b.name)}"></label>`,()=>{if(!$("editStriker").value.trim()||!$("editNon").value.trim())throw Error("Both batter names are required.");snap();a.name=$("editStriker").value.trim();b.name=$("editNon").value.trim();persist();render()})});
  $("editBowler")?.addEventListener("click",()=>{showModal("Change bowler",`<label class="field">NEXT BOWLER NAME<input id="editBowlerName" placeholder="Enter the new bowler"></label>`,()=>{const name=$("editBowlerName").value.trim();if(!name)throw Error("Enter a bowler name.");snap();const existing=active().bowlers.findIndex(b=>b.name.toLowerCase()===name.toLowerCase());if(existing>=0)active().bowler=existing;else{active().bowlers.push(blankBowler(name));active().bowler=active().bowlers.length-1;}persist();render()})});
- $("wicketBtn")?.addEventListener("click",()=>{const p1=i.batters[i.striker],p2=i.batters[i.non];showModal("Record a wicket",`<label class="field">DISMISSED BATTER<select id="outWho"><option value="striker">${esc(p1.name)} (striker)</option><option value="non">${esc(p2.name)} (non-striker)</option></select></label><label class="field">DISMISSAL<select id="dismissal"><option>Bowled</option><option>Caught</option><option>Run out</option><option>LBW</option><option>Stumped</option><option>Hit wicket</option></select></label><label class="field">NEXT BATTER<input id="nextBatter" placeholder="Incoming player's name"></label>`,()=>{const who=$("outWho").value,idx=who==="striker"?i.striker:i.non,name=$("nextBatter").value.trim();if(!name)throw Error("Enter the incoming batter's name.");snap();const out=i.batters[idx],kind=$("dismissal").value;out.out=true;out.dismissal=kind==="Caught"?"c fielder b "+currentBowler().name:kind==="Run out"?"run out":kind.toLowerCase()+" b "+currentBowler().name;i.wickets++;if(kind!=="Run out")currentBowler().wickets++;out.balls++;currentBowler().balls++;i.balls++;i.fow.push({wicket:i.wickets,score:i.runs,overs:overText(i.balls),batter:out.name});i.deliveries.push({id:Date.now(),label:"W",runs:0,legal:true,wicket:true,note:`${kind}: ${out.name} dismissed`,overNo:Math.ceil(i.balls/6)});i.batters.push(blankPlayer(name));const newId=i.batters.length-1;if(who==="striker")i.striker=newId;else i.non=newId;const completedOver=overEnd();checkComplete();persist();render();if(i.completed){if(state.inningsNo===1)showFirstInningsComplete()}else if(completedOver){showOverComplete(completedOver)}})});
+ $("wicketBtn")?.addEventListener("click",()=>{const p1=i.batters[i.striker],p2=i.batters[i.non];showModal("Record a wicket",`<label class="field">DISMISSED BATTER<select id="outWho"><option value="striker">${esc(p1.name)} (striker)</option><option value="non">${esc(p2.name)} (non-striker)</option></select></label><label class="field">DISMISSAL<select id="dismissal"><option>Bowled</option><option>Caught</option><option>Run out</option><option>LBW</option><option>Stumped</option><option>Hit wicket</option></select></label><label class="field">NEXT BATTER<input id="nextBatter" type="text" placeholder="e.g. Virat Kohli" aria-label="Incoming batter name" maxlength="32" autocomplete="off"></label>`,()=>{const who=$("outWho").value,idx=who==="striker"?i.striker:i.non,name=$("nextBatter").value.trim();if(!name)throw Error("Enter the incoming batter's name.");snap();const out=i.batters[idx],kind=$("dismissal").value;out.out=true;out.dismissal=kind==="Caught"?"c fielder b "+currentBowler().name:kind==="Run out"?"run out":kind.toLowerCase()+" b "+currentBowler().name;i.wickets++;if(kind!=="Run out")currentBowler().wickets++;out.balls++;currentBowler().balls++;i.balls++;i.fow.push({wicket:i.wickets,score:i.runs,overs:overText(i.balls),batter:out.name});i.deliveries.push({id:Date.now(),label:"W",runs:0,legal:true,wicket:true,note:`${kind}: ${out.name} dismissed`,overNo:Math.ceil(i.balls/6)});i.batters.push(blankPlayer(name));const newId=i.batters.length-1;if(who==="striker")i.striker=newId;else i.non=newId;const completedOver=overEnd();checkComplete();persist();render();if(i.completed){if(state.inningsNo===1)showFirstInningsComplete()}else if(completedOver){showOverComplete(completedOver)}})});
 }
 function showOverComplete(deliveries){
  const i=active();
@@ -172,85 +171,23 @@ function startSecondInnings(){
  state.first=JSON.parse(JSON.stringify(i));
  state.target=i.runs+1;
  state.inningsNo=2;
-
- const old=state.teamA;
- state.teamA=state.teamB;
- state.teamB=old;
-
- state.innings={
-  batting:state.teamA,
-  bowling:state.teamB,
-  runs:0,
-  wickets:0,
-  balls:0,
-  extras:{wide:0,noBall:0,bye:0,legBye:0},
-  batters:[blankPlayer(""),blankPlayer("")],
-  striker:0,
-  non:1,
-  bowlers:[blankBowler("")],
-  bowler:0,
-  deliveries:[],
-  fow:[],
-  completed:false
- };
-
- persist();
- page="live";
- render();
-
- showModal(
-  "Set the chase line-up",
-  `<p class="section-note">
-    Target: <strong>${state.target}</strong> ·
-    Balls available: <strong>${state.oversLimit*6}</strong>
-  </p>
-
-  <label class="field">
-   STRIKER
-   <input id="chaseA"
-    placeholder="Enter striker name"
-    aria-label="Striker name"
-    maxlength="32"
-    required>
-  </label>
-
-  <label class="field">
-   NON-STRIKER
-   <input id="chaseB"
-    placeholder="Enter non-striker name"
-    aria-label="Non-striker name"
-    maxlength="32"
-    required>
-  </label>
-
-  <label class="field">
-   OPENING BOWLER
-   <input id="chaseBowler"
-    placeholder="Enter opening bowler name"
-    aria-label="Opening bowler name"
-    maxlength="32"
-    required>
-  </label>`,
-
-  ()=>{
-   const striker=$("chaseA").value.trim();
-   const nonStriker=$("chaseB").value.trim();
-   const bowler=$("chaseBowler").value.trim();
-
-   if(!striker || !nonStriker || !bowler){
-    throw Error("Please enter all three player names.");
-   }
-
-   const x=active();
-
-   x.batters[0].name=striker;
-   x.batters[1].name=nonStriker;
-   x.bowlers[0].name=bowler;
-
-   persist();
-   render();
-  }
- );
+ const old=state.teamA;state.teamA=state.teamB;state.teamB=old;
+ state.innings={batting:state.teamA,bowling:state.teamB,runs:0,wickets:0,balls:0,extras:{wide:0,noBall:0,bye:0,legBye:0},batters:[blankPlayer(""),blankPlayer("")],striker:0,non:1,bowlers:[blankBowler("")],bowler:0,deliveries:[],fow:[],completed:false};
+ persist();page="live";render();
+ showModal("Set the chase line-up",`<p class="section-note">Target: <strong>${state.target}</strong> · Balls available: <strong>${state.oversLimit*6}</strong></p>
+ <label class="field">STRIKER<input id="chaseA" placeholder="Enter striker name" aria-label="Striker name" maxlength="32" required></label>
+ <label class="field">NON-STRIKER<input id="chaseB" placeholder="Enter non-striker name" aria-label="Non-striker name" maxlength="32" required></label>
+ <label class="field">OPENING BOWLER<input id="chaseBowler" placeholder="Enter opening bowler name" aria-label="Opening bowler name" maxlength="32" required></label>`,()=>{
+  const x=active();
+  const striker=$("chaseA").value.trim();
+  const nonStriker=$("chaseB").value.trim();
+  const bowler=$("chaseBowler").value.trim();
+  if(!striker||!nonStriker||!bowler)throw Error("Please enter all three player names.");
+  x.batters[0].name=striker;
+  x.batters[1].name=nonStriker;
+  x.bowlers[0].name=bowler;
+  persist();render();
+ });
 }
 function endInnings(){
  const i=active();if(state.inningsNo!==1)return;
